@@ -1,0 +1,12 @@
+npm install jsonwebtoken
+npm install bcrypt
+npm install cors 
+npm i axios  
+
+npm install express
+npm install dotenv 
+
+npm install mongodb
+
+npm install node-fetch
+
