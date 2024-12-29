@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from '../cart/CartSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping, products, setProducts }) => {
+const CartItem = ({ products, setProducts, setTotalAmount }) => {
   const cart = useSelector((state) => state.cart.items);
   console.log(cart)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  // Determine the previous page from location.state
+  const previousPage = location.state?.from || '/'; 
 
-  const DELIVERY_COST = 50; // Fixed delivery fee
-  const TAX_RATE = 0.08; // 8% tax rate
+
+  const DELIVERY_COST = 50; 
+  const TAX_RATE = 0.08; 
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
@@ -19,11 +24,15 @@ const CartItem = ({ onContinueShopping, products, setProducts }) => {
     const taxAmount = totalCartAmount * TAX_RATE;
     return totalCartAmount + taxAmount + DELIVERY_COST;
   };
+  useEffect(()=>{
+    if (setTotalAmount){
+      const total = calculateTotalAmount();
+      setTotalAmount(total)
+    }
+  }, [setTotalAmount])
 
   const handleContinueShopping = (e) => {
-    if (onContinueShopping) {
-      onContinueShopping(e);
-    }
+      navigate(previousPage); 
   };
 
   const handleIncrement = (item) => {
@@ -76,23 +85,28 @@ const CartItem = ({ onContinueShopping, products, setProducts }) => {
       console.error('Error: item._id is undefined', item);
       return;
     }
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
+    setProducts((prevProducts) =>{
+        const updatedProducts = prevProducts.map((product) =>
         product._id === item._id ? { ...product, stock: product.stock + item.quantity } : product
       )
-    );
+      console.log("Stock Restored:", updatedProducts);
+      return updatedProducts;
+    });
 
     dispatch(removeItem(item._id));
+    window.location.reload();
   };
 
   const handleCheckoutShopping = () => {
-    navigate('/payment');
+
+    navigate('/Payment');
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
     return parseFloat(item.price || 0) * (item.quantity || 0).toFixed(2);
   };
+
 
   return (
     <div className="cart-container">
@@ -146,9 +160,7 @@ const CartItem = ({ onContinueShopping, products, setProducts }) => {
         <br />
         <button className={
           cart.length <= 0 ? 'get-started-button1' : "get-started-button2"
-
         }
-        
          onClick={handleCheckoutShopping} 
          disabled={cart.length===0}>
           Checkout

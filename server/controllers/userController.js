@@ -2,6 +2,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { getDb } = require('../utils/db');
+const { ObjectId } = require('mongodb');
+
 
 // Register User
 const registerUser = async (req, res) => {
@@ -67,7 +69,63 @@ const loginUser = async (req, res) => {
   }
 };
 
+//get all users
+const getAllUsers = async (req, res)=>{
+  try{
+    const db = getDb();
+    const userCollection = db.collection("Users")
+    const users = await userCollection.find().toArray();
+    res.status(200).json(users)
+  }catch(error){
+    res.status(500).json({message: "Failed to fetch all users", error})
+
+  }
+}
+
+//get users by id
+const getUser = async (req, res)=>{
+  try{
+    const db = getDb();
+    const userCollection = db.collection("Users")
+    const user = await userCollection.findOne({_id: new ObjectId(req.params.id)})
+    console.log("the user is :", user)
+    if (user){
+      res.status(200).json(user);
+    }
+    else{
+      res.status(404).json({message: "user not found"})
+    }
+
+  }catch(error){
+    res.status(500).json({message: "failed to fetch a user by id"})
+
+  }
+}
+
+//delete users 
+const deleteUser = async (req,res)=>{
+  try{
+    const db = getDb();
+    const userCollection = db.collection("Users")
+    const result = await userCollection.deleteOne({_id:new ObjectId(req.params.id)})
+    console.log("the deleted product is ", result)
+    if (result.deletedCount === 1){
+        res.status(200).json({message: "user deleted successfully"})
+
+    }else{
+        res.status(404).json({message: "user not found"});
+    }
+    
+  }catch(error){
+    res.status(500).json({message: "Failed to delete user", error})
+
+  }
+}
+ 
 module.exports = {
+  deleteUser,
+  getAllUsers,
+  getUser,
   registerUser,
   loginUser,
 };

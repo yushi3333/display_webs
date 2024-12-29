@@ -6,7 +6,7 @@ const Apple = ({apples, addToCart} ) => {
 
   
   return (
-    <CardGroup apples={apples} addToCart={addToCart}/>
+    <CardGroup products={apples} addToCart={addToCart}/>
   )
 }
 

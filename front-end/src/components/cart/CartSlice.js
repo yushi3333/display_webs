@@ -20,10 +20,6 @@ const saveCartToLocalStorage = (cart) => {
   }
 };
 
-
-
-
-
 export const CartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -33,11 +29,8 @@ export const CartSlice = createSlice({
     addItem: (state, action) => {
       const {_id, name, image, price, stock} = action.payload;
       const existingItem = state.items.find(item => item._id === _id);
-      if (existingItem){
-         
-         existingItem.quantity++;
-        
-        
+      if (existingItem){ 
+         existingItem.quantity++;    
       }else{
         state.items.push({_id, name, image, price, stock, quantity:1});
       }

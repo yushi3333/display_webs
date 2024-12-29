@@ -16,7 +16,7 @@ function DropDown() {
           <Dropdown.Item href="/Dell">Dell</Dropdown.Item>
           <Dropdown.Item href="/ASUS">ASUS</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item>
+          
         </Dropdown.Menu>
       </Dropdown>
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import DellCardGroup from '../card/dellCardGroup'
+
+import CardGroup from '../card/CardGroup'
 const Dell = ({dells, addToCart}) => {
   return (
-    <DellCardGroup dells={dells} addToCart = {addToCart}/>
+    <CardGroup products={dells} addToCart = {addToCart}/>
   )
 }
 

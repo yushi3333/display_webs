@@ -4,8 +4,17 @@ import Header from '../src/components/header/Header'
 import Home from '../src/components/home/Home'
 import Apple from '../src/components/apple/Apple'
 import Dell from '../src/components/dell/Dell'
-
+import Register from './components/register/Register.js'
 import Layout from './components/Layout'
+import Login from './components/login/Login.js'
+import Details from './components/details/Details.js'
+import AdminRoute from './components/admin/adminRoute.js'
+import DashBoard from './components/admin/AdminDashBoard.js'
+import UserBoard from './components/admin/UserBoard.js';
+import SearchProducts from './components/card/CardGroup.js'
+import Fastlane from './components/pay/Fastline.js';
+
+
 import {Routes, Route, RouterProviderProps} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -22,22 +31,28 @@ function AppContent() {
   const [apples, setApples] = useState([])
   const [dells, setDells] = useState([])
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [totalAmount, setTotalAmount] = useState(0);
 
   
   const [addToCart, setAddToCart] = useState({})
-  const [showCart, setShowCart] = useState(false);
   const cart = useSelector((state) => state.cart.items || []);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role')
+  const ClientId = "AaRnJIfSN73BkZrRalwS3arrH_ciulT-CiPKExR4eixLhVc983UY3eEAHkkvFc7Xx1TeO98f_sXvDdEw"
 
 
   const getRecommends = async() =>{
     try{
       const appleResponse = await axios.get('http://localhost:3002/api/products/Apple');
       const dellResponse = await axios.get('http://localhost:3002/api/products/Dell');
+      const combineRecommends = [appleResponse.data[0], dellResponse.data[0]]
       const combine = [...appleResponse.data, ...dellResponse.data]
-      setRecommends(combine)
-
+      setRecommends(combineRecommends)
+      setProducts(combine)
+      setFilteredProducts(combine)
 
     }catch(err){
       console.log(err)
@@ -47,9 +62,7 @@ function AppContent() {
   const getDellProducts = async() =>{
     try{
       const response = await axios.get("http://localhost:3002/api/products/Dell");
-      
       setDells(response.data)
-
     }catch(err){
       console.log(err)
     }
@@ -67,14 +80,18 @@ function AppContent() {
     }
   }
 
-  
-
   useEffect(() => {
     getAppleProducts();
     getDellProducts();
     getRecommends();
     
   }, [])
+  const handleSearch = (searchTerm)=>{
+    const filtered= products.filter((product)=> 
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setFilteredProducts(filtered)
+
+  }
 
   const handleAddCart = (product)=>{
     // Check if the product belongs to apples or dells
@@ -125,19 +142,45 @@ function AppContent() {
     }
       
   }
+  const handleTransactionSuccess = (details) => {
+    console.log('Transaction Successful:', details);
+    alert(`Transaction completed by ${details.payer.name.given_name}`);
+  };
   
   return (
     <div>
-      <Header/>
+      
+      <Header username={username} role={role} onSearch={handleSearch}/>
       <Routes>
+
       <Route path="/" element={<Layout />}>
         {/* Use `index` for the default child route */}
-        <Route index element={<Home recommends={recommends} />} />
+        <Route index element={<Home recommends={recommends}/>} />
       </Route>
         <Route path="/Apple" element={<Apple apples={apples} addToCart={handleAddCart}/>}></Route>
         <Route path="/Dell" element={<Dell dells={dells} addToCart={handleAddCart}/>}></Route>
-        <Route path="/Cart" element={<CartItem onContinueShopping={()=>navigate("/")} products={[...apples,...dells]} setProducts={setProducts}/>}></Route>
+        <Route path="/Cart" element={<CartItem  products={products} setProducts={setProducts} setTotalAmount={setTotalAmount}/>}></Route>
+        <Route path="/Register" element={<Register/>}></Route>
+        <Route path="/Login" element={<Login/>}></Route>
+        <Route path="/Details" element={<Details product={products}/>}></Route>
+        <Route path="/Search" element = {<SearchProducts products={filteredProducts} addToCart={handleAddCart}/>}></Route>
+        <Route path="/Payment" element={<Fastlane clientId={ClientId} onTransactionSuccess={handleTransactionSuccess} totalAmount={totalAmount}/>}></Route>
+
+        <Route path="/admin/DashBoard" element={
+          <AdminRoute>
+            <DashBoard/>
+          </AdminRoute>
+
+        }/>
+        <Route path="/admin/UserBoard" element={
+          <AdminRoute>
+            <UserBoard/>
+          </AdminRoute>
+          
+        }/>
+        
       </Routes>  
+      
     </div>
   );
 }
