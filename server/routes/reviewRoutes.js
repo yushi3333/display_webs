@@ -1,7 +1,7 @@
 const express = require('express');
-const { getReviews } = require('../controllers/reviewController.js');
+const { createReviews } = require('../controllers/reviewController.js');
 const router = express.Router();
 
-router.post('/get-reviews', getReviews);
+router.post('/:productId', createReviews);
 
 module.exports = router;
