@@ -26,25 +26,50 @@ const getDellProducts = async(req, res)=>{
 
     }
 }
-//get all products
-const getProducts = async (req, res) =>{
-    try {
+
+const createProductForCategory = async (req,res) =>{
+    try{
+        const {category} = req.params;// Extract the category
+        console.log(`Category: ${category}`);
+        const validCategories = ['Apple', 'Dell'];
+
+        if (!validCategories.includes(category)) {
+            return res.status(400).json({ message: 'Invalid category' });
+        }
         const db = getDb();
-        const productCollection = db.collection("Products");
-        const products = await productCollection.find().toArray();
-        res.status(200).json(products)
-        //console.log('Products fetched:', products);
-    }catch(error){
-        res.status(500).json({message: "Failed to fetch all products", error})
+        const collection = db.collection(category);
+        const newProduct = req.body;// The product details from the request body
+        const result = await collection.insertOne(newProduct);
+        // Use the `result.insertedId` for success confirmation
+        res.status(201).json({
+            message: `Product created successfully in ${category}`,
+            product: { ...newProduct, _id: result.insertedId }, // Append inserted ID to the response
+        });
+
+    }catch(err){
+        res.status(500).json({message: `Failed to create product in ${req.params.category}`, err})
     }
-};
+}
+
+
+
+
+
+
 
 //get products by id
 const getProductsById = async (req,res)=>{
     try {
+        const {category, id} = req.params;
+        console.log(`fetching product from category: ${category} with ID: ${id}`)
+        const validCategories=['Apple', 'Dell'];
+        if (!validCategories.includes(category)){
+            return res.status(400).json({message: 'Invalid category'})
+        }
+
         const db = getDb();
-        const productCollection  = db.collection('Products');
-        const product = await productCollection.findOne({_id: new ObjectId(req.params.id)})
+        const collection  = db.collection(category);
+        const product = await collection.findOne({_id: new ObjectId(req.params.id)})
         console.log("the product is :", product)
         if (product){
             res.status(200).json(product);
@@ -58,46 +83,33 @@ const getProductsById = async (req,res)=>{
     }
 };
 
-//create new product
-const createProducts = async (req, res) => {
-    try{
-        const db = getDb();
-        const productCollection = db.collection("Products");
-        const newProduct= req.body;
-        const result = await productCollection.insertOne(newProduct)
-        res.status(201).json({message: "Product create successfully", product: result.ops[0]});
-
-    }catch(error){
-        res.status(500).json({message: "Failed to create product", error});
-    }
-};
-
 //update product by ID
 const updateProducts = async (req, res)=>{
 
     try{
+        const {category, id} = req.params;
         //console.log('PUT /api/products/:id route hit with ID:', req.params.id); // Debugging log
-        const trimmedId = req.params.id.trim();
+        const trimmedId = id.trim();
         //console.log('Trimmed ID:', trimmedId); // Log the trimmed version of ID
         if (!ObjectId.isValid(trimmedId)) {
             return res.status(400).json({ message: "Invalid product ID" });
         }
-
-       
+        const validCategories=['Apple', 'Dell'];
+        if (!validCategories.includes(category)){
+            return res.status(400).json({message: 'Invalid category'})
+        }    
         const db = getDb();
-        const productCollection = db.collection("Products");
+        const collection = db.collection(category);
         const updateData = req.body;
         //console.log('Update data:', updateData);
 
-        const productExists = await productCollection.findOne({ _id: new ObjectId(trimmedId) });
+        const productExists = await collection.findOne({ _id: new ObjectId(trimmedId) });
         //console.log('Product found before update:', productExists);
         if (!productExists) {
             return res.status(404).json({ message: "Product not found" });
         }
 
-        
-
-        const result = await productCollection.updateOne(
+        const result = await collection.updateOne(
             { _id: new ObjectId(trimmedId) },
             {$set: updateData},
 
@@ -118,9 +130,22 @@ const updateProducts = async (req, res)=>{
 //delete the product by id
 const deleteProducts = async (req, res)=>{
     try{
+        const {category, id} =req.params;
+        console.log(`fetching product in category ${category} with ID: ${id}`)
+        const trimmedId = id.trim();
+        if (!ObjectId.isValid(trimmedId)) {
+            return res.status(400).json({ message: "Invalid product ID" });
+        }
+
+
+        const validCategories=['Apple', 'Dell'];
+        if (!validCategories.includes(category)){
+            return res.status(400).json({message: 'Invalid category'})
+        }    
+       
         const db = getDb();
-        const productCollection = db.collection("Products")
-        const result = await productCollection.deleteOne({_id: new ObjectId(req.params.id)});
+        const collection = db.collection(category)
+        const result = await collection.deleteOne({_id: new ObjectId(trimmedId)});
         console.log("the deleted product is ", result)
         if (result.deletedCount === 1){
             res.status(200).json({message: "Product deleted successfully"})
@@ -137,11 +162,11 @@ const deleteProducts = async (req, res)=>{
 
 
 module.exports ={
-    getProducts,
+  
     getAppleProducts,
     getDellProducts,
+    createProductForCategory,
     getProductsById,
-    createProducts,
     updateProducts,
     deleteProducts
 };

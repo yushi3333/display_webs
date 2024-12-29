@@ -1,9 +1,9 @@
 const express = require('express');
 const {
-    getProducts,
+ 
     getAppleProducts,
     getDellProducts,
-    createProducts,
+    createProductForCategory,
     updateProducts,
     deleteProducts,
     getProductsById,
@@ -13,13 +13,13 @@ const {
 const router = express.Router();
 
 //CRUD routes for products
-router.get('/', getProducts);
+
 router.get('/Apple', getAppleProducts);//get apple
 router.get('/Dell',getDellProducts);//get dell
-router.get('/:id', getProductsById);
-router.post('/', createProducts);//create
-router.put('/:id', updateProducts);//update
-router.delete('/:id', deleteProducts)
+router.post('/:category', createProductForCategory)
+router.get('/:category/:id', getProductsById);
+router.put('/:category/:id', updateProducts);//update
+router.delete('/:category/:id', deleteProducts)
 
 module.exports = router;
 

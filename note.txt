@@ -6,6 +6,7 @@ npm install --legacy-peer-deps
 npm install web-vitals
 npm install @reduxjs/toolkit
 npm install react-redux
+npm install @paypal/paypal-js
 
 
 npm install

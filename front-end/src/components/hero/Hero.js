@@ -2,17 +2,13 @@ import React from 'react'
 import Carousel from 'react-material-ui-carousel'
 import {Paper} from '@mui/material'
 import './hero.css'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import {Link, useNavigate} from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 const Hero = ({recommends}) => {
 
-
-    // const navigate = useNavigate();
-    // function reviews(movieId){
-    //     navigate(`/Reviews/${movieId}`)
-    // }
   return (
     <div className='carousel-container'>
         <Carousel>
@@ -25,6 +21,8 @@ const Hero = ({recommends}) => {
                                     {/* <h1>ssssa</h1> */}
                                     <div className="item-details">
                                         <div className="item-poster">
+                                            
+
                                             <img src={item.image[0]} alt=""/>
                                         </div>
                                         <div className="item-title">
