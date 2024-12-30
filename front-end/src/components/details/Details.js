@@ -1,6 +1,9 @@
 import React from 'react'
+import ReviewForm from '../review/ReviewForm'
+import Review from '../review/Review'
 
 const Details = ({product}) => {
+
   return (
     
     <div className="productContainer">
@@ -10,6 +13,13 @@ const Details = ({product}) => {
             <p><strong>Overview:</strong> {product.overview || "No overivew available"}</p>
             <p><strong>Price:</strong> ${product.price}</p>
             <p><strong>Stock:</strong> {product.stock}</p>
+
+            
+        </div>
+        <div>
+          <ReviewForm productId={product._id}  />
+          <h3>Customer Review</h3>
+          <Review productId={product._id}/>
         </div>
         
     </div>
