@@ -13,7 +13,9 @@ const Dashboard = () => {
     try {
       const appleResponse = await axios.get('http://localhost:3002/api/products/Apple');
       const dellResponse = await axios.get("http://localhost:3002/api/products/Dell");
-      const combine = [...appleResponse.data, ...dellResponse.data]
+      const asusResponse = await axios.get("http://localhost:3002/api/products/Asus")
+    
+      const combine = [...appleResponse.data, ...dellResponse.data, ...asusResponse.data]
  
       setProducts(combine);
     } catch (error) {

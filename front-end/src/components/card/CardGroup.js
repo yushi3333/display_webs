@@ -32,8 +32,6 @@ const CardGroup = ({products, addToCart})=> {
                 {item.image?.map((imgSrc, index) => (
                   <Card.Img key ={index}
                   variant="top" src={imgSrc} />
-                  
-                    
                  
                 ))}
               </Carousel>
@@ -43,7 +41,7 @@ const CardGroup = ({products, addToCart})=> {
               <Card.Text>
                 ${item.price}
               </Card.Text>
-              <Button variant="primary" onClick={()=>addToCart(item)}  >Add to Cart</Button>
+              <Button variant="primary" onClick={()=>addToCart(item)} >Add to Cart</Button>
               <Button variant="dark" onClick={()=>handleOpenDetails(item)} >Details</Button>
 
             </Card.Body>

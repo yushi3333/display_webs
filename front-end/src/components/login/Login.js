@@ -53,38 +53,50 @@ const Login = () => {
 
     }
 
+    const handleSignUp = () =>{
+        navigate("/Register");
+    }
+
     return (
-        <section>
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Sign In</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    autoComplete="off"
-                    value={user}
-                    onChange={(e) => setUser(e.target.value)}
-                    required
-                />
-                
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={pwd}
-                    onChange={(e) => setPwd(e.target.value)}
-                    required
-                />
-                
-                <button type="submit">Sign In</button>
-            </form>
-            <p>Need an Account?<br />
-                <span className="line">
-                    <a href="/Register">Sign Up</a>
-                </span>
-            </p>
-        </section>
+        <div className="hero">
+            <section className="loginContainer">
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <h1>Sign In</h1>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        autoComplete="off"
+                        value={user}
+                        onChange={(e) => setUser(e.target.value)}
+                        required
+                    />
+                    
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={pwd}
+                        onChange={(e) => setPwd(e.target.value)}
+                        required
+                    />
+                    
+                    <button className="signInButton"type="submit">Sign In</button>
+                </form>
+                <p>Need an Account?<br />
+                    <span className="line">
+                        
+                        <button className="signInButton" onClick={handleSignUp} >
+                           Sign Up
+
+                        </button>
+                    </span>
+                </p>
+            </section>
+
+        </div>
+       
     )
 }
 
