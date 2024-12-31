@@ -93,10 +93,6 @@ const ProductForm = ({ product, onSubmit }) => {
       }));
     }
 
-    // setFormData({
-    //   ...formData,
-    //   [e.target.name]: e.target.value,
-    // });
   };
 
   const handleSubmit = (e) => {
@@ -190,6 +186,7 @@ const ProductForm = ({ product, onSubmit }) => {
           <option value="">Select a category</option>
           <option value="Apple">Apple</option>
           <option value="Dell">Dell</option>
+          <option value="Asus">Asus</option>
         </select>
       </div>
 

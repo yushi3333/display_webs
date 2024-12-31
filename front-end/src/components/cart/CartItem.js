@@ -2,6 +2,9 @@ import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from '../cart/CartSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './CartItem.css';
 
@@ -109,51 +112,58 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
 
 
   return (
-    <div className="cart-container">
+    <Container>
+      {/* <Row>
       <h2 style={{ color: 'black', marginTop:'5%', textAlign:'center'}}>Total Cart Amount: ${calculateTotalAmount().toFixed(2)}</h2>
-      <div>
-        {cart.filter((item)=> item && item._id && item.name)
-        .map((item) => (
-          <div className="cart-item" key={item._id}>
-            <img className="cart-item-image" src={item.image} alt={item.name} />
-            <div className="cart-item-details">
-              <div className="cart-item-name">{item.name}</div>
-              <div className="cart-item-cost">${item.price}</div>
-              <div className="cart-item-quantity">
-                <button
-                  className="cart-item-button-dec"
-                  onClick={() => handleDecrement(item)}
-                  disabled={item.quantity <= 1}
-                >
-                  -
+        
+      </Row> */}
+      <Row>
+        <Col>
+          <div className="cartItems">
+          {cart.filter((item)=> item && item._id && item.name)
+          .map((item) => (
+            <div className="cart-item" key={item._id}>
+              <img className="cart-item-image" src={item.image} alt={item.name} />
+              <div className="cart-item-details">
+                <div className="cart-item-name">{item.name}</div>
+                <div className="cart-item-cost">${item.price}</div>
+                <div className="cart-item-quantity">
+                  <button
+                    className="cart-item-button-dec"
+                    onClick={() => handleDecrement(item)}
+                    disabled={item.quantity <= 1}
+                  >
+                    -
+                  </button>
+                  <span className="cart-item-quantity-value">{item.quantity}</span>
+                  <button
+                    className="cart-item-button-inc"
+                    onClick={() => handleIncrement(item)}
+                    disabled={item.quantity >= item.stock}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="cart-item-total">Total: ${calculateTotalCost(item).toFixed(2)}</div>
+                <button className="cart-item-delete" onClick={() => handleRemove(item)}>
+                  Delete
                 </button>
-                <span className="cart-item-quantity-value">{item.quantity}</span>
-                <button
-                  className="cart-item-button-inc"
-                  onClick={() => handleIncrement(item)}
-                  disabled={item.quantity >= item.stock}
-                >
-                  +
-                </button>
-              </div>
-              <div className="cart-item-total">Total: ${calculateTotalCost(item).toFixed(2)}</div>
-              <button className="cart-item-delete" onClick={() => handleRemove(item)}>
-                Delete
-              </button>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div style={{ marginTop: '20px', color: 'black' }} className="total_cart_amount"></div>
-      <div className="summary-container" style={{ marginTop: '20px', color: 'black' }}>
-        <h3>Summary</h3>
-        <p>Subtotal: ${cart.reduce((total, item) => total + (item.price||0) * (item.quantity||0), 0).toFixed(2)}</p>
-        <p>Tax (13%): ${(cart.reduce((total, item) => total + (item.price||0) * (item.quantity||0), 0) * TAX_RATE).toFixed(2)}</p>
-        <p>Delivery Cost: ${DELIVERY_COST.toFixed(2)}</p>
-        <p><strong>Total Amount: ${calculateTotalAmount().toFixed(2)}</strong></p>
-      </div>
-      <div className="continue_shopping_btn">
+        </Col>
+        <Col>
+        <div style={{ marginTop: '20px', color: 'black' }} className="total_cart_amount"></div>
+        <div className="summary-container" style={{ marginTop: '20px', color: 'black' }}>
+          <h3>Summary</h3>
+          <p>Subtotal: ${cart.reduce((total, item) => total + (item.price||0) * (item.quantity||0), 0).toFixed(2)}</p>
+          <p>Tax (13%): ${(cart.reduce((total, item) => total + (item.price||0) * (item.quantity||0), 0) * TAX_RATE).toFixed(2)}</p>
+          <p>Delivery Cost: ${DELIVERY_COST.toFixed(2)}</p>
+          <p><strong>Total Amount: ${calculateTotalAmount().toFixed(2)}</strong></p>
+        </div>
+        <div className="continue_shopping_btn">
         <button className="get-started-button2" onClick={handleContinueShopping}>
           Continue Shopping
         </button>
@@ -166,7 +176,13 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
           Checkout
         </button>
       </div>
-    </div>
+
+
+        </Col>
+      </Row>
+
+    
+    </Container>
   );
 };
 

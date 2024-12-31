@@ -3,6 +3,7 @@ const {
  
     getAppleProducts,
     getDellProducts,
+    getAsusProducts,
     createProductForCategory,
     updateProducts,
     deleteProducts,
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.get('/Apple', getAppleProducts);//get apple
 router.get('/Dell',getDellProducts);//get dell
+router.get('/Asus', getAsusProducts);
 router.post('/:category', createProductForCategory)
 router.get('/:category/:id', getProductsById);//get review by id
 router.put('/:category/:id', updateProducts);//update

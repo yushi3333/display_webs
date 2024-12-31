@@ -10,8 +10,7 @@ const getAppleProducts = async (req, res)=>{
         res.status(200).json(products)
         console.log('Apple products fetched:', products);
     }catch(error){
-        res.status(500).json({message: "Failed to fetch all apple", error})
-        
+        res.status(500).json({message: "Failed to fetch all apple", error})     
     }
 }
 //get dell products
@@ -21,17 +20,28 @@ const getDellProducts = async(req, res)=>{
         const dellCollection = db.collection('Dell');
         const products = await dellCollection.find().toArray();
         res.status(200).json(products)
-
     }catch(err){
 
     }
 }
 
+//get asus products
+const getAsusProducts = async(req,res)=>{
+    try{
+        const db= getDb();
+        const asusCollection = db.collection("Asus");
+        const products = await asusCollection.find().toArray();
+        res.status(200).json(products)
+
+    }catch(err){
+
+    }
+}
 const createProductForCategory = async (req,res) =>{
     try{
         const {category} = req.params;// Extract the category
         console.log(`Category: ${category}`);
-        const validCategories = ['Apple', 'Dell'];
+        const validCategories = ['Apple', 'Dell', 'Asus'];
 
         if (!validCategories.includes(category)) {
             return res.status(400).json({ message: 'Invalid category' });
@@ -138,7 +148,7 @@ const deleteProducts = async (req, res)=>{
         }
 
 
-        const validCategories=['Apple', 'Dell'];
+        const validCategories=['Apple', 'Dell', 'Asus'];
         if (!validCategories.includes(category)){
             return res.status(400).json({message: 'Invalid category'})
         }    
@@ -165,6 +175,7 @@ module.exports ={
   
     getAppleProducts,
     getDellProducts,
+    getAsusProducts,
     createProductForCategory,
     getProductsById,
     updateProducts,
