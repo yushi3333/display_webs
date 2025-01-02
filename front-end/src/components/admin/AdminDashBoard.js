@@ -11,9 +11,9 @@ const Dashboard = () => {
   // Fetch all products from the API
   const fetchProducts = async () => {
     try {
-      const appleResponse = await axios.get('http://localhost:3002/api/products/Apple');
-      const dellResponse = await axios.get("http://localhost:3002/api/products/Dell");
-      const asusResponse = await axios.get("http://localhost:3002/api/products/Asus")
+      const appleResponse = await axios.get('http://0.0.0.0:3002/api/products/Apple');
+      const dellResponse = await axios.get("http://0.0.0.0:3002/api/products/Dell");
+      const asusResponse = await axios.get("http://0.0.0.0:3002/api/products/Asus")
     
       const combine = [...appleResponse.data, ...dellResponse.data, ...asusResponse.data]
  
@@ -37,7 +37,7 @@ const Dashboard = () => {
       // Update product
       try {
         console.log('Updating product with ID:', editingProduct._id);
-        await axios.put(`http://localhost:3002/api/products/${product.category}/${editingProduct._id}`, product);
+        await axios.put(`http://0.0.0.0:3002/api/products/${product.category}/${editingProduct._id}`, product);
         console.log('Product updated successfully!');
         window.location.reload();  // Force the page to reload to reflect the changes
         
@@ -47,7 +47,7 @@ const Dashboard = () => {
     } else {
       // Create new product
       try {
-        const response = await axios.post(`http://localhost:3002/api/products/${product.category}`, product);
+        const response = await axios.post(`http://0.0.0.0:3002/api/products/${product.category}`, product);
 
         setProducts([...products, response.data]);
         
@@ -61,7 +61,7 @@ const Dashboard = () => {
   // Handle deleting a product
   const handleDelete = async (singleProduct) => {
     try {
-      await axios.delete(`http://localhost:3002/api/products/${singleProduct.category}/${singleProduct._id}`);
+      await axios.delete(`http://0.0.0.0:3002/api/products/${singleProduct.category}/${singleProduct._id}`);
       setProducts(products.filter((product) => product._id !== singleProduct._id));
       fetchProducts(); 
     } catch (error) {
