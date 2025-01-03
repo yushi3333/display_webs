@@ -25,6 +25,7 @@ const UserBoard = () => {
             await axios.delete(`https://yugopro.com/api/users/${singleUser._id}`);
             setUsers(users.filter((user)=> user._id) !== singleUser._id)
             fetchUsers();
+            window.location.reload();
 
         }catch(error){
 
