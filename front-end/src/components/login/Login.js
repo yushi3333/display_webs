@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://3.17.150.236:3002/api/users/login", {
+            const response = await axios.post("http://yugopro.com/api/users/login", {
                 username: user,
                 password: pwd
             });

@@ -42,15 +42,15 @@ function AppContent() {
   const username = localStorage.getItem('username');
   const role = localStorage.getItem('role')
   const ClientId = "AaRnJIfSN73BkZrRalwS3arrH_ciulT-CiPKExR4eixLhVc983UY3eEAHkkvFc7Xx1TeO98f_sXvDdEw"
-  const API_URL = 'https://3.17.150.236:3002';
+  const API_URL = 'https://yugopro.com/api';
 
   const getRecommends = async() =>{
     try{
-      const appleResponse = await axios.get('http://3.17.150.236:3002/api/products/Apple');
+      const appleResponse = await axios.get('https://yugopro.com/api/products/Apple');
 
-      const dellResponse = await axios.get('http://3.17.150.236:3002/api/products/Dell');
+      const dellResponse = await axios.get('http://yugopro.com/api/products/Dell');
 
-      const asusResponse = await axios.get('http://3.17.150.236:3002/api/products/Asus');
+      const asusResponse = await axios.get('http://yugopro.com/api/products/Asus');
       const combineRecommends = [appleResponse.data[0], dellResponse.data[0], asusResponse.data[0]]
       const combine = [...appleResponse.data, ...dellResponse.data, ...asusResponse.data]
       setRecommends(combineRecommends)
@@ -65,7 +65,7 @@ function AppContent() {
   const getDellProducts = async() =>{
     try{
       //backend api endpoint
-      const response = await axios.get("http://3.17.150.236:3002/api/products/Dell");
+      const response = await axios.get("http://yugopro.com/api/products/Dell");
       setDells(response.data)
     }catch(err){
       console.log(err)
@@ -73,7 +73,7 @@ function AppContent() {
   }
   const getAsusProducts = async() =>{
     try{
-      const response = await axios.get("http://3.17.150.236:3002/api/products/Asus");
+      const response = await axios.get("http://yugopro.com/api/products/Asus");
       setAsus(response.data)
     }catch(err){
       console.log(err)
@@ -82,7 +82,7 @@ function AppContent() {
 
   const getAppleProducts = async()=>{
     try{
-      const response = await axios.get("http://3.17.150.236:3002/api/products/Apple");
+      const response = await axios.get("http://yugopro.com/api/products/Apple");
       
       setApples(response.data)
       
