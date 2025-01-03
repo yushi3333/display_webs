@@ -7,7 +7,7 @@ const UserBoard = () => {
     
     const fetchUsers = async () =>{
         try{
-            const usersResponse = await axios.get('http://127.0.0.1:3002/api/users/allUsers');
+            const usersResponse = await axios.get('http://3.17.150.236:3002/api/users/allUsers');
             console.log('Fetched users:', usersResponse.data);
             setUsers(usersResponse.data)
         }catch(error){
@@ -22,7 +22,7 @@ const UserBoard = () => {
 
     const handleDelete = async (singleUser)=>{
         try{
-            await axios.delete(`http://127.0.0.1:3002/api/users/${singleUser._id}`);
+            await axios.delete(`http://3.17.150.236:3002/api/users/${singleUser._id}`);
             setUsers(users.filter((user)=> user._id) !== singleUser._id)
             fetchUsers();
 
