@@ -72,7 +72,7 @@ const Register = () =>{
             return;
         }
         try{
-            const response = await axios.post('http://yugopro.com/api/users/register', {
+            const response = await axios.post('https://yugopro.com/api/users/register', {
                 username: user,
                 email: email,
                 password: pwd,

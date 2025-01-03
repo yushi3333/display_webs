@@ -7,7 +7,7 @@ const UserBoard = () => {
     
     const fetchUsers = async () =>{
         try{
-            const usersResponse = await axios.get('http://yugopro.com/api/users/allUsers');
+            const usersResponse = await axios.get('https://yugopro.com/api/users/allUsers');
             console.log('Fetched users:', usersResponse.data);
             setUsers(usersResponse.data)
         }catch(error){
@@ -22,7 +22,7 @@ const UserBoard = () => {
 
     const handleDelete = async (singleUser)=>{
         try{
-            await axios.delete(`http://yugopro.com/api/users/${singleUser._id}`);
+            await axios.delete(`https://yugopro.com/api/users/${singleUser._id}`);
             setUsers(users.filter((user)=> user._id) !== singleUser._id)
             fetchUsers();
 

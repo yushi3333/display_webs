@@ -48,9 +48,9 @@ function AppContent() {
     try{
       const appleResponse = await axios.get('https://yugopro.com/api/products/Apple');
 
-      const dellResponse = await axios.get('http://yugopro.com/api/products/Dell');
+      const dellResponse = await axios.get('https://yugopro.com/api/products/Dell');
 
-      const asusResponse = await axios.get('http://yugopro.com/api/products/Asus');
+      const asusResponse = await axios.get('https://yugopro.com/api/products/Asus');
       const combineRecommends = [appleResponse.data[0], dellResponse.data[0], asusResponse.data[0]]
       const combine = [...appleResponse.data, ...dellResponse.data, ...asusResponse.data]
       setRecommends(combineRecommends)
@@ -65,7 +65,7 @@ function AppContent() {
   const getDellProducts = async() =>{
     try{
       //backend api endpoint
-      const response = await axios.get("http://yugopro.com/api/products/Dell");
+      const response = await axios.get("https://yugopro.com/api/products/Dell");
       setDells(response.data)
     }catch(err){
       console.log(err)
@@ -73,7 +73,7 @@ function AppContent() {
   }
   const getAsusProducts = async() =>{
     try{
-      const response = await axios.get("http://yugopro.com/api/products/Asus");
+      const response = await axios.get("https://yugopro.com/api/products/Asus");
       setAsus(response.data)
     }catch(err){
       console.log(err)
@@ -82,7 +82,7 @@ function AppContent() {
 
   const getAppleProducts = async()=>{
     try{
-      const response = await axios.get("http://yugopro.com/api/products/Apple");
+      const response = await axios.get("https://yugopro.com/api/products/Apple");
       
       setApples(response.data)
       
