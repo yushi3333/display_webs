@@ -11,7 +11,7 @@ const ReviewForm  = ({productId})=>{
         e.preventDefault();
         try{
             const username = localStorage.getItem('username');
-            await axios.post(`http://localhost:3002/api/reviews/${productId}`, {username, rating, comment})
+            await axios.post(`https://yugopro.com/api/reviews/${productId}`, {username, rating, comment})
             setRating(0);
             setComments('');
             

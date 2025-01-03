@@ -6,7 +6,7 @@ const Review = ({productId})=>{
 
     const fetchReview = async() =>{
         try{
-            const response = await axios.get(`http://localhost:3002/api/reviews/${productId}`);
+            const response = await axios.get(`https://yugopro.com/api/reviews/${productId}`);
             setReview(response.data)
 
         }catch(err){
