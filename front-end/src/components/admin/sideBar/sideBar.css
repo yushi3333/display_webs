@@ -26,6 +26,11 @@
     text-align: center;
     
 }
+#link{
+    text-align: center;
+
+    
+}
 
 nav a:hover{
     background: rgba(255, 254, 255, 0.5);
@@ -50,5 +55,6 @@ nav a.active{
     #nav_content{
         display:flex;
         justify-content: center;
+        height: 9%;
     }
 }

@@ -123,7 +123,7 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="product-list" id ="product-list" style={{width:"65vw", justifyContent:"center", alignContent:"center"}}>
+      <div className="product-list" id ="product-list" style={{width:"100%", justifyContent:"center", alignContent:"center"}}>
         <h2>Product List</h2>
             <Row>
               <Col >
@@ -138,12 +138,6 @@ const Dashboard = () => {
 
               </Col>
             
-              {/* <Col >
-              <Button style={{width: '100%'}} onClick={handleSortByPrice} variant="dark">
-              Sort By Price({sortOrder === 'asc' ? 'low to high' : 'high to low'})
-              </Button>
-              </Col> */}
-          
            
             </Row>
          
@@ -155,7 +149,7 @@ const Dashboard = () => {
               <th onClick={handleSortByPrice} style={{cursor: 'pointer'}}>Price {sortOrder === 'asc' ? '^' : 'v'}</th>
               <th>Stock</th>
               
-              <th>Category</th>
+              
               <th>Action</th>
             
             </tr>
@@ -167,19 +161,22 @@ const Dashboard = () => {
                 <td>{product.name}</td>
                 <td>${product.price}</td>
                 <td>{product.stock}</td>
-                
-                <td>{product.category}</td>
+              
                 
                 <td>
-                  <button onClick={() => handleEdit(product)}>Edit</button>
-                  <button onClick={() => handleDelete(product)}>Delete</button>
+                  <button style={{width:'100%'}}onClick={() => handleEdit(product)}>Edit</button>
+                  <button style={{width:'100%'}}onClick={() => handleDelete(product)}>Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
+      <div style={{marginBottom:'10%'}}>
+
+      </div>
     </div>
+    
   );
 };
 
