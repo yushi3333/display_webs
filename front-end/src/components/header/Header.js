@@ -43,7 +43,7 @@ const Header = ({username ,role, onSearch}) => {
 
   };
   return (
-    <Navbar bg="dark" variant="dark" expand= "lg">
+    <Navbar bg="dark" variant="dark" expand= "lg" width="100vw">
       <Container fluid>
         <Navbar.Brand href="/" style={{"color": 'gold'}}>
           <FontAwesomeIcon icon={faLaptop}/>Computer Store
@@ -81,6 +81,8 @@ const Header = ({username ,role, onSearch}) => {
               <Dropdown.ItemText>Welcome, {username}</Dropdown.ItemText>
               <Dropdown.Item href="/admin/Dashboard">Product Management</Dropdown.Item>
               <Dropdown.Item href="/admin/UserBoard">User Management</Dropdown.Item>
+              <Dropdown.Item href="https://yushi3333.github.io/display_web/">About Me</Dropdown.Item>
+
 
               <Dropdown.Divider />
 

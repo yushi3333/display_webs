@@ -1,0 +1,54 @@
+#nav_content{
+    background:rgb(0,0,0,0.3);
+    
+    display:block;
+    padding:0.7rem 1.5rem;
+    /*The z-index property takes an integer value that represents the stacking order. Elements with higher z-index values are placed on top of elements with lower values.*/
+    z-index:2;
+    position:fixed;
+    
+    justify-content: center;
+    transform: tranlsateX(-50%);
+    bottom: 2rem;
+    
+    gap :2rem;
+    border-radius: 3rem; /*边框变椭圆*/
+    backdrop-filter: blur(15px);/*applies a filter to the area behind an element, including its background, using a visual effect like a blur or color shift*/
+}
+
+#nav_content #link{
+    background: transparent;
+    padding: 0.5rem;
+    border-radius:50%;
+    display:flex;
+    color:var(--color-light);
+    font-size:1.1rem;
+    text-align: center;
+    
+}
+
+nav a:hover{
+    background: rgba(255, 254, 255, 0.5);
+    
+}
+
+nav a.active{
+    background: var(--color-bg);
+    color:var(--color-white);
+
+}
+
+@media screen and (max-width: 1024px){
+    #nav_content{
+        display:flex;
+        justify-content: center;
+    }
+    
+}
+
+@media screen and (max-width: 600px){
+    #nav_content{
+        display:flex;
+        justify-content: center;
+    }
+}

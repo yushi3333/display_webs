@@ -3,10 +3,22 @@ import axios from 'axios';
 import ProductForm from './productFrom';
 import './dashBoard.css'; 
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Sidebar from './sideBar/sideBar';
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
+
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+
 
   // Fetch all products from the API
   const fetchProducts = async () => {
@@ -18,6 +30,7 @@ const Dashboard = () => {
       const combine = [...appleResponse.data, ...dellResponse.data, ...asusResponse.data]
  
       setProducts(combine);
+      setFilteredProducts(combine);
     } catch (error) {
       console.error('Failed to fetch products', error);
     }
@@ -38,7 +51,7 @@ const Dashboard = () => {
       try {
         console.log('Updating product with ID:', editingProduct._id);
         await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`, product);
-        console.log('Product updated successfully!');
+        window.alert('Product updated successfully!');
         window.location.reload();  // Force the page to reload to reflect the changes
         
       } catch (error) {
@@ -50,7 +63,7 @@ const Dashboard = () => {
         const response = await axios.post(`https://yugopro.com/api/products/${product.category}`, product);
 
         setProducts([...products, response.data]);
-        
+        window.alert('New product has been added!')
         window.location.reload(); 
       } catch (error) {
         console.error('Failed to create product', error);
@@ -58,12 +71,34 @@ const Dashboard = () => {
     }
   };
 
+  //handleSortbyprice
+  const handleSortByPrice = () =>{
+    const sortedProducts= [...filteredProducts].sort((a,b) =>{
+      return sortOrder === 'asc' ? a.price - b.price : b.price - a.price;
+    })
+    setFilteredProducts(sortedProducts);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');//toggle order
+  }
+  //handle search
+  const handleSearch = (event) =>{
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = products.filter(product=>
+      product.name.toLowerCase().includes(query)
+    );
+
+    setFilteredProducts(filtered);
+
+  }
+
   // Handle deleting a product
   const handleDelete = async (singleProduct) => {
     try {
       await axios.delete(`https://yugopro.com/api/products/${singleProduct.category}/${singleProduct._id}`);
       setProducts(products.filter((product) => product._id !== singleProduct._id));
       fetchProducts(); 
+      window.alert('The product has been deleted!')
     } catch (error) {
       console.error('Failed to delete product', error);
     }
@@ -75,9 +110,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    
+    <div className="dashboard" style={{width:"100vw"}}>
+      <Sidebar /> {/* Sidebar Component */}
+      
+      <div id = "product-form"className="product-form" style={{width:"100vw", justifyContent:"center", alignContent:"center"}}>
       <h1>Admin Dashboard</h1>
-      <div className="product-form">
         <ProductForm
           key={editingProduct ? editingProduct._id : 'new'}
           product={editingProduct}
@@ -85,15 +123,38 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="product-list">
+      <div className="product-list" id ="product-list" style={{width:"65vw", justifyContent:"center", alignContent:"center"}}>
         <h2>Product List</h2>
-        <Table striped bordered hover variant="dark"> 
+            <Row>
+              <Col >
+               {/* search bar */}
+              <input 
+                type='text'
+                placeholder='search by product name'
+                value={searchQuery}
+                onChange={handleSearch}
+                style={{width: '100%'}}
+                />
+
+              </Col>
+            
+              {/* <Col >
+              <Button style={{width: '100%'}} onClick={handleSortByPrice} variant="dark">
+              Sort By Price({sortOrder === 'asc' ? 'low to high' : 'high to low'})
+              </Button>
+              </Col> */}
+          
+           
+            </Row>
+         
+        <Table striped bordered hover variant="dark">         
           <thead>
             <tr>
               <th>Name</th>
-              <th>Price</th>
+
+              <th onClick={handleSortByPrice} style={{cursor: 'pointer'}}>Price {sortOrder === 'asc' ? '^' : 'v'}</th>
               <th>Stock</th>
-              <th>Overview</th>
+              
               <th>Category</th>
               <th>Action</th>
             
@@ -101,12 +162,12 @@ const Dashboard = () => {
            
           </thead>
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product._id}>
                 <td>{product.name}</td>
                 <td>${product.price}</td>
                 <td>{product.stock}</td>
-                <td>{product.overview}</td>
+                
                 <td>{product.category}</td>
                 
                 <td>
