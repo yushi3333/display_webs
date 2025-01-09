@@ -102,8 +102,10 @@ const Header = ({username ,role, onSearch}) => {
             ):(
               <>
               <Dropdown.Item href="/Login">Login</Dropdown.Item>
-              <Dropdown.Divider />
+           
               <Dropdown.Item href="/Register">Register</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="https://yushi3333.github.io/display_web/">About Me</Dropdown.Item>
             
               
 
