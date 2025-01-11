@@ -49,6 +49,12 @@ const Dashboard = () => {
     if (editingProduct) {
       // Update product
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error("No token found, user might not be authenticated.");
+          return;
+        }
+
         console.log('Updating product with ID:', editingProduct._id);
         await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`,{
           headers: { Authorization: `Bearer ${token}` }
@@ -62,6 +68,13 @@ const Dashboard = () => {
     } else {
       // Create new product
       try {
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error("No token found, user might not be authenticated.");
+          return;
+        }
+
         const response = await axios.post(`https://yugopro.com/api/products/${product.category}`,{
           headers: { Authorization: `Bearer ${token}` }
         }, product);
@@ -99,6 +112,12 @@ const Dashboard = () => {
   // Handle deleting a product
   const handleDelete = async (singleProduct) => {
     try {
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("No token found, user might not be authenticated.");
+        return;
+      }
       await axios.delete(`https://yugopro.com/api/products/${singleProduct.category}/${singleProduct._id}`,{
         headers: { Authorization: `Bearer ${token}` }
       });
