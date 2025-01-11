@@ -50,7 +50,9 @@ const Dashboard = () => {
       // Update product
       try {
         console.log('Updating product with ID:', editingProduct._id);
-        await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`, product);
+        await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`,{
+          headers: { Authorization: `Bearer ${token}` }
+        }, product);
         window.alert('Product updated successfully!');
         window.location.reload();  // Force the page to reload to reflect the changes
         
@@ -60,7 +62,9 @@ const Dashboard = () => {
     } else {
       // Create new product
       try {
-        const response = await axios.post(`https://yugopro.com/api/products/${product.category}`, product);
+        const response = await axios.post(`https://yugopro.com/api/products/${product.category}`,{
+          headers: { Authorization: `Bearer ${token}` }
+        }, product);
 
         setProducts([...products, response.data]);
         window.alert('New product has been added!')
@@ -95,7 +99,9 @@ const Dashboard = () => {
   // Handle deleting a product
   const handleDelete = async (singleProduct) => {
     try {
-      await axios.delete(`https://yugopro.com/api/products/${singleProduct.category}/${singleProduct._id}`);
+      await axios.delete(`https://yugopro.com/api/products/${singleProduct.category}/${singleProduct._id}`,{
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setProducts(products.filter((product) => product._id !== singleProduct._id));
       fetchProducts(); 
       window.alert('The product has been deleted!')

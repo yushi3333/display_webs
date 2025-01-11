@@ -7,7 +7,14 @@ const UserBoard = () => {
     
     const fetchUsers = async () =>{
         try{
-            const usersResponse = await axios.get('https://yugopro.com/api/users/allUsers');
+            const token = localStorage.getItem('token');
+            if (!token) {
+              console.error("No token found, user might not be authenticated.");
+              return;
+            }
+            const usersResponse = await axios.get('https://yugopro.com/api/users/allUsers',{
+              headers: { Authorization: `Bearer ${token}` }
+            });
             console.log('Fetched users:', usersResponse.data);
             setUsers(usersResponse.data)
         }catch(error){
@@ -22,7 +29,16 @@ const UserBoard = () => {
 
     const handleDelete = async (singleUser)=>{
         try{
-            await axios.delete(`https://yugopro.com/api/users/${singleUser._id}`);
+            const token = localStorage.getItem('token');
+            if (!token) {
+              console.error("No token found, user might not be authenticated.");
+              return;
+            }
+
+            await axios.delete(`https://yugopro.com/api/users/${singleUser._id}`,{
+              headers: { Authorization: `Bearer ${token}` }
+            }
+            );
             setUsers(users.filter((user)=> user._id) !== singleUser._id)
             fetchUsers();
             window.location.reload();
