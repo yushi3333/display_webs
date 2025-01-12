@@ -39,10 +39,10 @@ const UserBoard = () => {
               headers: { Authorization: `Bearer ${token}` }
             }
             );
-            setUsers(users.filter((user)=> user._id) !== singleUser._id)
+            setUsers(prevUsers => prevUsers.filter(user => user._id !== singleUser._id));
             fetchUsers();
             window.alert('User deleted successfully');
-            window.location.reload();
+            
 
         }catch(error){
 

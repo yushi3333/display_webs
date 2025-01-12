@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 const ReviewForm  = ({productId})=>{
     const [rating, setRating] = useState(0);
     const [comment, setComments] = useState("");
+
     
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -46,24 +47,14 @@ const ReviewForm  = ({productId})=>{
                 <option value="5">5 - Excellent</option>
             </select> */}
 
-
-
-
-
-
             <InputGroup>
                 <InputGroup.Text>Comment</InputGroup.Text>
                 <Form.Control as="textarea" aria-label="With textarea" value={comment} onChange={(e)=>setComments(e.target.value)} required />
             </InputGroup>
 
-
-
             {/* <label>Comment:</label>
             <textarea value={comment} onChange={(e) => setComments(e.target.value)} required /> */}
-
             <button type="submit">Submit Review</button>
-
-
         </form>
 
     )

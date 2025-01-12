@@ -56,9 +56,9 @@ const Dashboard = () => {
         }
 
         console.log('Updating product with ID:', editingProduct._id);
-        await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`,{
+        await axios.put(`https://yugopro.com/api/products/${product.category}/${editingProduct._id}`,product,{
           headers: { Authorization: `Bearer ${token}` }
-        }, product);
+        }, );
         window.alert('Product updated successfully!');
         window.location.reload();  // Force the page to reload to reflect the changes
         
@@ -75,9 +75,9 @@ const Dashboard = () => {
           return;
         }
 
-        const response = await axios.post(`https://yugopro.com/api/products/${product.category}`,{
+        const response = await axios.post(`https://yugopro.com/api/products/${product.category}`, product,{
           headers: { Authorization: `Bearer ${token}` }
-        }, product);
+        },);
 
         setProducts([...products, response.data]);
         window.alert('New product has been added!')
