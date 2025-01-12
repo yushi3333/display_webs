@@ -50,8 +50,6 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
               product._id === item._id ? { ...product, stock: product.stock - 1 } : product
           )
       );
-    }else{
-      window.alert("Can not add more than available stock")
     }
   
    
@@ -142,6 +140,7 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
                     className="cart-item-button-inc"
                     onClick={() => handleIncrement(item)}
                     disabled={item.quantity >= item.stock}
+                    {...window.alert('Out of stock')}
                   >
                     +
                   </button>

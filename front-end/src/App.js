@@ -115,10 +115,10 @@ function AppContent() {
       const existingCartItem = cart.find((item)=>item._id === product._id);
       if (existingCartItem){
         dispatch(updateQuantity({_id:product._id, name:product.name, quantity: existingCartItem.quantity + 1}));
-        console.log("add existing item to the cart")
+        window.alert("add existing item to the cart")
       
       }else{
-        console.log("add new item to the cart")
+        window.alert("add new item to the cart")
         dispatch(addItem({
           _id: product._id,
           name: product.name,
@@ -158,7 +158,7 @@ function AppContent() {
         [product.name]: true,
       }));
     } else {
-        console.log("Out of stock");
+        window.alert("Out of stock");
 
     }
       
