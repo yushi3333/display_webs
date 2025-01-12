@@ -7,4 +7,6 @@ const Dell = ({dells, addToCart}) => {
   )
 }
 
+
+
 export default Dell

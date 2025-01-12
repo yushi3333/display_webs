@@ -41,6 +41,7 @@ const UserBoard = () => {
             );
             setUsers(users.filter((user)=> user._id) !== singleUser._id)
             fetchUsers();
+            window.alert('User deleted successfully');
             window.location.reload();
 
         }catch(error){

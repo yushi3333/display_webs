@@ -50,8 +50,10 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
               product._id === item._id ? { ...product, stock: product.stock - 1 } : product
           )
       );
-  }
-
+    }else{
+      window.alert("Can not add more than available stock")
+    }
+  
    
    
   };
