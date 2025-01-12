@@ -14,6 +14,8 @@ const ReviewForm  = ({productId})=>{
             await axios.post(`https://yugopro.com/api/reviews/${productId}`, {username, rating, comment})
             setRating(0);
             setComments('');
+            window.alert('Review submitted successfully');
+            window.location.reload();
             
 
         }catch(err){
