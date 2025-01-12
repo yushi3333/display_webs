@@ -140,7 +140,7 @@ const CartItem = ({ products, setProducts, setTotalAmount }) => {
                     className="cart-item-button-inc"
                     onClick={() => handleIncrement(item)}
                     disabled={item.quantity >= item.stock}
-                    {...window.alert('Out of stock')}
+                    
                   >
                     +
                   </button>
